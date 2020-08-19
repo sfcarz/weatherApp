@@ -4,6 +4,8 @@ $(document).ready(function () {
     let $history = $('#history');
     let storage = JSON.parse(localStorage.getItem('Search'));
 
+    
+
     // console.log(storage);
 
     $submit.on('click', function (event) {
@@ -19,7 +21,7 @@ $(document).ready(function () {
         url: `http://api.weatherstack.com/current?access_key=f1a8eeecc5bdbf06ef0f440e0391e09c&query=${search}`,
         method: "GET",
     }).then(function(response) {
-        console.log(response);
+        // console.log(response);
 
         const inputName = response.location.name;
         const date = moment().format('dddd, MMMM Do');
@@ -32,6 +34,8 @@ $(document).ready(function () {
         const windDir = response.current.wind_dir;
         const uvIndex = response.current.uv_index;
         const visibility = response.current.visibility;
+
+        const divWeather = $('<div>').addClass('bg-light pr-1')
         const nameH1 = $('<h1>').text(inputName).addClass('card-title pl-4');
         const dateH3 = $('<h3>').text(date).addClass('pl-4');
         const desH3 = $('<h5>').text(description).addClass('pl-4');
@@ -39,9 +43,10 @@ $(document).ready(function () {
         const humidH5 = $('<h5>').text(`Humidity ${humidity}%`).addClass('pl-4');
         const windH5 = $('<h5>').text(`Wind Speed: ${wind}`).addClass('pl-4');
         const windDirection = $('<h5>').text(`Wind Direction: ${windDir}`).addClass('pl-4');
-        const viseH5 = $('<h5>').text(`Visability: ${visibility} mi`).addClass('pl-4');
+        const viseH5 = $('<h5>').text(`Visibility: ${visibility} mi`).addClass('pl-4');
         const uvH5 = $('<h5>').text(`UV: ${uvIndex}`).addClass('pl-4');
-        $('#userRequest').append(nameH1, dateH3, desH3, tempH5, humidH5, windH5, windDirection, viseH5, uvH5)
+        divWeather.append(nameH1, dateH3, desH3, tempH5, humidH5, windH5, windDirection, viseH5, uvH5);
+        $('#userRequest').append(divWeather)
         // console.log(tempF);
         // console.log(icon);
     });
@@ -59,23 +64,30 @@ $(document).ready(function () {
         method: 'GET',
     }).then(function(response) {
         // console.log(response);
-        const unix = response.daily[0].dt;
-        const m = moment(unix).format('dddd Do')
-        const icon = response.daily[0].weather[0].icon;
-        const temp = response.daily[0].temp.max;
+
+        for (let i = 1; i < 6; i++) {
+            console.log(i);
+        
+
+        const unix = response.daily[i].dt;
+        const date = moment.unix(unix).format('dddd');
+        // const dateString = date.toGMTString()
+        const icon = response.daily[i].weather[0].icon;
+        const temp = response.daily[i].temp.max;
         const tempF = (temp - 273.15) * 1.80 + 32;
-        const humid = response.daily[0].humidity;
-        // console.log(temp, tempF);
-        const card = $('<div>').addClass('card-body  bg-secondary')
-        const day = $('<h5>').addClass('card-title').text(m);
-        const iconTag = $('<a>').attr(`href: ${icon}`);
+        const humid = response.daily[i].humidity;
+        console.log(date);
+        const mainDiv = $('<div>').addClass('card-group');
+        const div = $('<div>').addClass('card bg-primary text-light m-1 pl-2 pr-2');
+        const card = $('<div>').addClass('card-body');
+        const day = $('<h5>').addClass('card-title').text(date);
+        const iconTag = $('<img>').attr(`src: ${icon} alt: 'weather icon'`,);
         const tempTag = $('<p>').text(`Temp: ${tempF.toFixed(2)}°`);
-        const humidTag = $('<p>').text(`Humidity: ${humid}%`)
-        card.append(day, tempTag, humidTag),
-        $('#card').append(card);
-        // console.log(icon);
-
-
+        const humidTag = $('<p>').text(`Humidity: ${humid}%`);
+        div.append(card, day, iconTag, tempTag, humidTag);
+        mainDiv.append(div);
+        $('#card').append(mainDiv);
+    
 
         // This was a Fun experience
 
@@ -83,12 +95,12 @@ $(document).ready(function () {
         // const newDate = new Date(unixMill);
         // const time = newDate.toLocaleString();
         // console.log(time);
-
+    };
     });
 
     });
 
-    
+
 });
 
 
