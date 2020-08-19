@@ -28,18 +28,20 @@
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline">
 
-                        <input class="form-control mr-sm-2" id="search" type="text" placeholder="Search" aria-label="Search">
-                        
+                        <input class="form-control mr-sm-2" id="searching" type="text" placeholder="Search">
+
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="submit">Search</button>
                         <br>
 
-                        <ul class="list-group">
-                            <li class="list-group-item mt-1">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Morbi leo risus</li>
-                            <li class="list-group-item">Porta ac consectetur ac</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul>
+                        <div class="list-group mt-3" id="history">
+                            <!-- <a href="#" class="list-group-item list-group-item-action active">
+                              Cras justo odio
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action" aria-placeholder="History"></a>
+                            <a href="#" class="list-group-item list-group-item-action"></a>
+                            <a href="#" class="list-group-item list-group-item-action"></a>
+                            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true"></a> -->
+                          </div>
 
                     </form>
                 </nav>
@@ -50,19 +52,18 @@
             <div class="col-lg-8 col-sm-10 mt-4">
 
                 <div class="card mr-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div class="card-body" id="userRequest">
+
                     </div>
 
-                    <div class="card m-1" style="width: 12rem;">
+                    <!-- <div class="card m-1" style="width: 12rem;">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk
                                 of the card's content.</p>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -75,6 +76,7 @@
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
         <script src="script.js"></script>
 </body>
 
