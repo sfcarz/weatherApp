@@ -21,12 +21,12 @@ $(document).ready(function () {
         url: `http://api.weatherstack.com/current?access_key=f1a8eeecc5bdbf06ef0f440e0391e09c&query=${search}`,
         method: "GET",
     }).then(function(response) {
-        // console.log(response);
+        console.log(response);
 
         const inputName = response.location.name;
         const date = moment().format('dddd, MMMM Do');
-        const icon = response.current.weather_icons[0];
-        const description = response.current.weather_description;
+        const icon = response.current.weather_icons[0].value;
+        const description = response.current.weather_descriptions[0].value;
         const temp = response.current.temperature;
         const tempF = (temp * 9/5) + 32;
         const humidity = response.current.humidity;
@@ -34,7 +34,6 @@ $(document).ready(function () {
         const windDir = response.current.wind_dir;
         const uvIndex = response.current.uv_index;
         const visibility = response.current.visibility;
-
         const divWeather = $('<div>').addClass('bg-light pr-1')
         const nameH1 = $('<h1>').text(inputName).addClass('card-title pl-4');
         const dateH3 = $('<h3>').text(date).addClass('pl-4');
@@ -47,18 +46,15 @@ $(document).ready(function () {
         const uvH5 = $('<h5>').text(`UV: ${uvIndex}`).addClass('pl-4');
         divWeather.append(nameH1, dateH3, desH3, tempH5, humidH5, windH5, windDirection, viseH5, uvH5);
         $('#userRequest').append(divWeather)
-        // console.log(tempF);
-        // console.log(icon);
+        console.log(icon, description);
     });
 
     $.ajax({
         url: `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=4d3e71aa350785d4a2efee37a6cbbf4e`,
         method: 'GET',
     }).then(function(response) {
-        // console.log(response);
         const lat = response.coord.lat;
         const long = response.coord.lon;
-        // console.log(lat, long);
     $.ajax({
         url: `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=current,minutely,hourly&appid=4d3e71aa350785d4a2efee37a6cbbf4e`,
         method: 'GET',
@@ -66,17 +62,14 @@ $(document).ready(function () {
         // console.log(response);
 
         for (let i = 1; i < 6; i++) {
-            console.log(i);
-        
 
         const unix = response.daily[i].dt;
         const date = moment.unix(unix).format('dddd');
-        // const dateString = date.toGMTString()
         const icon = response.daily[i].weather[0].icon;
         const temp = response.daily[i].temp.max;
         const tempF = (temp - 273.15) * 1.80 + 32;
         const humid = response.daily[i].humidity;
-        console.log(date);
+        // console.log(icon);
         const mainDiv = $('<div>').addClass('card-group');
         const div = $('<div>').addClass('card bg-primary text-light m-1 pl-2 pr-2');
         const card = $('<div>').addClass('card-body');
@@ -87,7 +80,6 @@ $(document).ready(function () {
         div.append(card, day, iconTag, tempTag, humidTag);
         mainDiv.append(div);
         $('#card').append(mainDiv);
-    
 
         // This was a Fun experience
 
@@ -97,13 +89,7 @@ $(document).ready(function () {
         // console.log(time);
     };
     });
-
     });
-
-
 });
-
-
-
 });
 

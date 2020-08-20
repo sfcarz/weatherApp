@@ -20,46 +20,27 @@
         </div>
     </header>
 
+    <!-- <img src="https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0006_mist.png" alt="Mist"> -->
+
     <div class="container">
         <div class="row">
-
-
+                    <!-- Search Bar and History -->
             <div class="col-lg-4 col-sm-12 mt-4">
                 <nav class="navbar navbar-light bg-light">
                     <form class="form-inline">
-
                         <input class="form-control mr-sm-2" id="searching" type="text" placeholder="Search">
-
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="submit">Search</button>
                         <br>
-
-                        <div class="list-group mt-3" id="history">
-                            <!-- <a href="#" class="list-group-item list-group-item-action active">
-                                Cras justo odio
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action" aria-placeholder="History"></a>
-                            <a href="#" class="list-group-item list-group-item-action"></a>
-                            <a href="#" class="list-group-item list-group-item-action"></a>
-                            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true"></a> -->
-                        </div>
-
+                        <div class="list-group mt-3" id="history"></div>
                     </form>
                 </nav>
-
             </div>
-
-
+                <!-- Search request playback -->
             <div class="col-lg-8 col-sm-10 mt-4">
                 <div id="userRequest"></div>
-
                 <div class="card-group" id="card"></div>
-
-
             </div>
         </div>
-
-
-
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
