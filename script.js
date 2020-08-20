@@ -9,10 +9,13 @@ $(document).ready(function () {
     // console.log(storage);
 
     $submit.on('click', function (event) {
-    event.preventDefault();
+        event.preventDefault();
+        $('#userRequest').empty();
+        $('#card').empty();
     const search = $search.val();
     const aTag = $('<a>').addClass('list-group-item list-group-item-action').attr('href: #');
-    localStorage.setItem('Search', JSON.stringify(search));
+        localStorage.setItem(`${search}`, JSON.stringify(search));
+        
 
     $history.append(aTag).text(storage);
     $search.val('');
@@ -22,11 +25,13 @@ $(document).ready(function () {
         method: "GET",
     }).then(function(response) {
         console.log(response);
+        console.log(response.current);
+        console.log(response.current.weather_icons[0]);
 
         const inputName = response.location.name;
         const date = moment().format('dddd, MMMM Do');
-        const icon = response.current.weather_icons[0].value;
-        const description = response.current.weather_descriptions[0].value;
+        const icon = response.current.weather_icons[0];
+        const description = response.current.weather_descriptions[0];
         const temp = response.current.temperature;
         const tempF = (temp * 9/5) + 32;
         const humidity = response.current.humidity;
