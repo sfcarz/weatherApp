@@ -2,31 +2,37 @@ $(document).ready(function () {
     let $search = $('#searching');
     let $submit = $('#submit');
     let $history = $('#history');
-    let storage = JSON.parse(localStorage.getItem('Search'));
+    let cityList = JSON.parse(localStorage.getItem('Search'));
+    let memory = [];
 
     
 
-    // console.log(storage);
+    console.log(memory);
 
     $submit.on('click', function (event) {
         event.preventDefault();
         $('#userRequest').empty();
         $('#card').empty();
-    const search = $search.val();
-    const aTag = $('<a>').addClass('list-group-item list-group-item-action').attr('href: #');
-        localStorage.setItem(`${search}`, JSON.stringify(search));
+
+        const search = $search.val();
+        // const memory = [];
+        memory.push(search);;
         
 
-    $history.append(aTag).text(storage);
+    const aTag = $('<a>').addClass('list-group-item list-group-item-action').attr('href: #');
+        localStorage.setItem('Search', JSON.stringify(memory));
+        
+
+    // $history.append(aTag).text(storage);
     $search.val('');
 
     $.ajax({
         url: `http://api.weatherstack.com/current?access_key=f1a8eeecc5bdbf06ef0f440e0391e09c&query=${search}`,
         method: "GET",
     }).then(function(response) {
-        console.log(response);
-        console.log(response.current);
-        console.log(response.current.weather_icons[0]);
+        // console.log(response);
+        // console.log(response.current);
+        // console.log(response.current.weather_icons[0]);
 
         const inputName = response.location.name;
         const date = moment().format('dddd, MMMM Do');
@@ -39,6 +45,7 @@ $(document).ready(function () {
         const windDir = response.current.wind_dir;
         const uvIndex = response.current.uv_index;
         const visibility = response.current.visibility;
+        
         const divWeather = $('<div>').addClass('bg-light pr-1')
         const nameH1 = $('<h1>').text(inputName).addClass('card-title pl-4');
         const dateH3 = $('<h3>').text(date).addClass('pl-4');
@@ -51,7 +58,7 @@ $(document).ready(function () {
         const uvH5 = $('<h5>').text(`UV: ${uvIndex}`).addClass('pl-4');
         divWeather.append(nameH1, dateH3, desH3, tempH5, humidH5, windH5, windDirection, viseH5, uvH5);
         $('#userRequest').append(divWeather)
-        console.log(icon, description);
+        // console.log(icon, description);
     });
 
     $.ajax({
